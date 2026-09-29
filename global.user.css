@@ -1,0 +1,15 @@
+/* ==UserStyle==
+@name           Global
+@namespace      github.com/openstyles/stylus
+@version        1.0.0
+@description    A new userstyle
+@author         Codexophile
+==/UserStyle== */
+
+@-moz-document url-prefix("https://")
+{
+    a:visited,
+    a:visited * {
+        color: rgb(116, 51, 133);
+    }
+}

@@ -1,0 +1,296 @@
+/* ==UserStyle==
+@name           youtube.com
+@namespace      github.com/openstyles/stylus
+@version        1.0.0
+@description    A new userstyle
+@author         Codexophile
+==/UserStyle== */
+@-moz-document regexp(".+\\/watch.+"),
+url("https://www.youtube.com/") {
+    /* hiding watched videos */
+    :is( ytd-rich-item-renderer,
+    yt-lockup-view-model,
+    ytd-compact-video-renderer):has( yt-thumbnail-overlay-progress-bar-view-model,
+    ytd-thumbnail-overlay-resume-playback-renderer) {
+        display: none !important;
+    }
+}
+@-moz-document url-prefix("https://www.youtube.com/@"),
+url-prefix("https://www.youtube.com/channel/"),
+url-prefix("https://www.youtube.com/c/") {
+    /* Channel pages      */
+    #contents {
+        justify-content: space-evenly !important;
+    }
+    #contents > ytd-rich-item-renderer {
+        /* individual video items */
+        max-width: 300px;
+    }
+
+    ytd-two-column-browse-results-renderer {
+        max-width: 90vw !important;
+        width: 90vw !important;
+    }
+}
+
+
+@-moz-document regexp(".+\\/watch.+") {
+    /* Video pages      */
+    #primary {
+        transform: translateY(-55px);
+    }
+
+    /* top bar */
+    #masthead-container {
+        right: 5px;
+        width: auto !important;
+    }
+    #masthead-container :is(#start,
+    #center) {
+        display: none;
+    }
+
+    /* subtitles */
+    #caption-window-1 {
+        top: 2% !important;
+        left: 2% !important;
+        margin: unset !important;
+    }
+
+    [id^="caption-window-_"] {
+        left: unset !important;
+        bottom: unset !important;
+        top: 2% !important;
+        right: 2% !important;
+        margin: unset !important;
+        width: fit-content !important;
+
+        &,
+        & * {
+            user-select: text !important;
+        }
+    }
+
+    /* video comments */
+    ytd-comment-thread-renderer {
+        max-width: 480px;
+    }
+
+    iron-selector#chips {
+        display: flex !important;
+        flex-wrap: wrap;
+    }
+
+    /* */
+    #caption-window-1 *,
+    .ytp-caption-segment {
+        user-select: text !important;
+    }
+
+    .ytLockupViewModelContentImage {
+        width: 100% !important;
+    }
+
+    yt-lockup-view-model {
+        margin: 5px;
+        width: 48%;
+    }
+
+    /* related section */
+    .ytLockupViewModelMetadata {
+        display: none;
+    }
+
+    :is(yt-lockup-view-model,
+    ytd-compact-video-renderer):hover :is( .ytLockupViewModelMetadata,
+    .yt-lockup-view-model-wiz__metadata,
+    .details.style-scope.ytd-compact-video-renderer,
+    .yt-lockup-view-model__metadata) {
+        display: block;
+        position: absolute;
+        top: -100px;
+        background-color: black;
+    }
+
+    /* related/suggested section */
+    ytd-item-section-renderer > #contents {
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+
+        yt-lockup-view-model {
+            max-width: 47%;
+        }
+    }
+}
+
+@-moz-document url-prefix('https://www.youtube.com/playlist?') {
+    /* Playlists      */
+    ytd-playlist-video-renderer {
+        width: 50%;
+    }
+    #contents {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+@-moz-document url-prefix("https://www.youtube.com/results?search_query=") {
+    /* Search page      */
+    /* channels as a result */
+    #content-section,
+    #content-section * {
+        flex: unset !important;
+        flex-wrap: wrap !important;
+        min-width: unset !important;
+        width: fit-content !important;
+        max-width: 400px !important;
+    }
+    /* */
+    grid-shelf-view-model {
+        /* shorts */
+        width: -webkit-fill-available;
+    }
+
+    ytd-two-column-search-results-renderer,
+    #primary {
+        margin: unset !important;
+        width: 90vw !important;
+        max-width: 90vw !important;
+    }
+
+    ytd-search {
+        overflow-y: unset !important
+    }
+
+    ytd-horizontal-card-list-renderer {
+        width: 80vw;
+    }
+
+    .text-wrapper.style-scope.ytd-video-renderer {
+        width: 100%;
+    }
+
+    #items {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around !important;
+    }
+
+    #contents {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around !important;
+    }
+
+    ytd-video-renderer,
+    ytd-radio-renderer {
+        width: 300px;
+    }
+
+    #dismissible,
+    ytd-radio-renderer {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+}
+
+@-moz-document url('https://www.youtube.com/') {
+    /* Home page      */
+    /* mix items */
+    #contents {
+        justify-content: space-around !important;
+    }
+    ytd-rich-item-renderer:has( [aria-label="My Mix"],
+    [aria-label^="Mix - "]) {
+        display: none;
+    }
+
+    ytd-rich-item-renderer {
+        max-width: 320px;
+    }
+
+    yt-formatted-string {
+        -webkit-line-clamp: 1 !important;
+    }
+}
+
+@-moz-document domain('youtube.com') {
+    /* domain */
+    /* shorts */
+    :is(ytd-rich-item-renderer,
+    .ytGridShelfViewModelGridShelfItem):has(ytm-shorts-lockup-view-model) {
+        max-width: 180px !important;
+    }
+    /* the div wrapping all the shorts rows */
+    div:has( > .ytGridShelfViewModelGridShelfRow.ytd-item-section-renderer.grid-shelf-with-top-margin) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        /* each row div — remove it from the box model, keep children flowing */
+        & > div {
+            display: contents;
+        }
+    }
+
+
+    /* remove text-trunc style on posts */
+    ytd-rich-item-renderer:has( > #content > ytd-post-renderer) {
+        width: 40rem;
+        max-width: unset;
+    }
+    ytd-post-renderer {
+
+        &,
+        #body {
+            height: unset !important;
+            max-height: unset !important;
+            text-align: justify;
+        }
+
+        yt-formatted-string {
+            text-overflow: clip !important;
+            /* Removes the ellipsis (...) and stops clipping logic */
+            white-space: normal !important;
+            /* Allows text to naturally wrap to the next line */
+            overflow: visible !important;
+            /* Ensures text outside the bounding box remains visible */
+            -webkit-line-clamp: unset !important;
+            /* Disables multi-line truncation limits */
+            display: block !important;
+            /* Resets -webkit-box layouts used for multi-line clamping */
+        }
+    }
+}
+
+@-moz-document domain('youtube.com') {
+/* Shrinking shorts width     */
+    /* Shorts shown as regular lockups: narrow the thumbnail only */
+    yt-lockup-view-model:is(:has(a[href*="/shorts/"]), :has(badge-shape[aria-label="Shorts"])) {
+        --short-h: 170px;                              /* match your normal thumbnail height */
+        --short-w: calc(var(--short-h) * 9 / 16);      /* ≈ 95.6px */
+
+        /* the item and its host get a definite width */
+        &,
+        & > .ytLockupViewModelHost {
+            width: var(--short-w) !important;
+            min-width: var(--short-w) !important;
+            max-width: none !important;
+            flex: 0 0 auto !important;
+        }
+
+        /* the wrapper that carries the inline width: 62.5% */
+        .ytLockupViewModelContentImage {
+            width: var(--short-w) !important;
+            min-width: var(--short-w) !important;
+            flex: none !important;
+        }
+
+        /* the thumbnail fills the wrapper, height comes from the ratio */
+        yt-thumbnail-view-model {
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 9 / 16 !important;
+        }
+    }
+}
